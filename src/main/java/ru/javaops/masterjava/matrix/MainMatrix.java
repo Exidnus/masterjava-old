@@ -6,8 +6,8 @@ package ru.javaops.masterjava.matrix;
  */
 public class MainMatrix {
     // Multiplex matrix
-    private static final int MATRIX_SIZE = 1000;
-    private static final int THREAD_NUMBER = 10;
+    static final int MATRIX_SIZE = 1000;
+    static final int THREAD_NUMBER = 10;
 
     public static void main(String[] args) {
         final int[][] matrixA = new int[MATRIX_SIZE][MATRIX_SIZE];
@@ -19,6 +19,12 @@ public class MainMatrix {
         final int[][] matrixC =  MatrixUtil.singleThreadMultiply(matrixA, matrixB);
         System.out.println("Single thread multiplication time, sec: " + (System.currentTimeMillis() - start)/1000.);
 
+        start = System.currentTimeMillis();
+        final int[][] matrixD = MatrixUtil.multiplyWithExecutorService(matrixA, matrixB);
+        MatrixUtil.checkOnEqualsMatrixs(matrixC, matrixD);
+        System.out.println("Multi thread multiplication time, sec: " + (System.currentTimeMillis() - start)/1000.);
+        System.out.println(MatrixUtil.checkOnEqualsMatrixs(matrixC, matrixD) ?
+                "matrixC and matrixD are equals" : "matrixC and matrixD are not equals");
 
         // TODO implement parallel multiplication matrixA*matrixB
         // TODO compare wih matrixC;
