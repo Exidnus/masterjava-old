@@ -3,10 +3,7 @@ package ru.javaops.masterjava.matrix;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * gkislin
@@ -32,11 +29,10 @@ public class MatrixUtil {
 
     public static int[][] multiplyWithExecutorService(int[][] matrix1, int[][] matrix2) {
         int[][] result = new int[matrix1.length][matrix1.length];
-        ExecutorService executor = Executors.newFixedThreadPool(MainMatrix.THREAD_NUMBER - 1);
-        List<Future<? super Void>> dones = new ArrayList<>();
+        List<Callable<Boolean>> tasks = new ArrayList<>();
         for (int i = 0; i < matrix1.length; i++) {
             final int iCopy = i;
-            Future<? super Void> done = executor.submit(() -> {
+            Callable<Boolean> current = () -> {
                 for (int y = 0; y < matrix1.length; y++) {
                     int resultInt = 0;
                     for (int k = 0; k < matrix1.length; k++) {
@@ -44,16 +40,21 @@ public class MatrixUtil {
                     }
                     result[iCopy][y] = resultInt;
                 }
-                return Void.TYPE;
-            });
-            dones.add(done);
+                return Boolean.TRUE;
+            };
+            tasks.add(current);
         }
-        for (Future<? super Void> done : dones) {
-            try {
-                done.get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+        final ExecutorService executor = Executors.newFixedThreadPool(MainMatrix.THREAD_NUMBER - 1);
+
+        try {
+            List<Future<Boolean>> dones = executor.invokeAll(tasks);
+            for (Future<Boolean> done : dones) {
+                if (!done.get()) {
+                    throw new RuntimeException("Computation wasn't performed");
+                }
             }
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
         }
         executor.shutdown();
         return result;
