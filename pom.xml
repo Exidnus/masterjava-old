@@ -38,9 +38,6 @@
                             <mainClass>ru.javaops.masterjava.matrix.MainMatrix</mainClass>
                         </manifest>
                     </archive>
-                    <!--<descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>-->
                 </configuration>
             </plugin>
             <plugin>

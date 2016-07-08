@@ -16,15 +16,20 @@ public class MainMatrix {
         MatrixUtil.fillMatrixWithRandomNumbers(matrixB);
 
         long start = System.currentTimeMillis();
-        final int[][] matrixC =  MatrixUtil.singleThreadMultiply(matrixA, matrixB);
-        System.out.println("Single thread multiplication time, sec: " + (System.currentTimeMillis() - start)/1000.);
+        final int[][] matrixC = MatrixUtil.singleThreadMultiply(matrixA, matrixB);
+        System.out.println("Single thread multiplication time, sec: " + (System.currentTimeMillis() - start) / 1000.);
 
         start = System.currentTimeMillis();
         final int[][] matrixD = MatrixUtil.multiplyWithExecutorService(matrixA, matrixB);
-        MatrixUtil.checkOnEqualsMatrixs(matrixC, matrixD);
-        System.out.println("Multi thread multiplication time, sec: " + (System.currentTimeMillis() - start)/1000.);
+        System.out.println("Multi thread multiplication time, sec: " + (System.currentTimeMillis() - start) / 1000.);
         System.out.println(MatrixUtil.checkOnEqualsMatrixs(matrixC, matrixD) ?
                 "matrixC and matrixD are equals" : "matrixC and matrixD are not equals");
+
+        start = System.currentTimeMillis();
+        final int[][] matrixE = new Matrix14JavaMultiplier().multiply(matrixA, matrixB);
+        System.out.println("Multi thread multiplication in Java 1.4 time, sec: " + (System.currentTimeMillis() - start / 1000.));
+        System.out.println(MatrixUtil.checkOnEqualsMatrixs(matrixC, matrixE) ?
+                "matrixC and matrixE are equals" : "matrixC and matrixE are not equals");
 
         // TODO implement parallel multiplication matrixA*matrixB
         // TODO compare wih matrixC;
