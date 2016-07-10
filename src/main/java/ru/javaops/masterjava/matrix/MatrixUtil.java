@@ -1,5 +1,7 @@
 package ru.javaops.masterjava.matrix;
 
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,14 +51,45 @@ public class MatrixUtil {
         try {
             List<Future<Boolean>> dones = executor.invokeAll(tasks);
             for (Future<Boolean> done : dones) {
-                if (!done.get()) {
-                    throw new RuntimeException("Computation wasn't performed");
-                }
+                done.get();
             }
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
         executor.shutdown();
+        return result;
+    }
+
+    public static int[][] multiplyWithOnlyJava14(int[][] matrix1, int[][] matrix2) {
+
+        final IncrementHelper helper = new IncrementHelper();
+        int[][] result = new int[matrix1.length][matrix1.length];
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 0; i < MainMatrix.THREAD_NUMBER - 1; i++) {
+            Thread worker = new Thread(() -> {
+                while (helper.haveMoreWork() && !Thread.currentThread().isInterrupted()) {
+                    Pair<Integer, Integer> current = helper.getAndIncrement();
+                    final int x = current.getKey();
+                    final int y = current.getValue();
+                    int sum = 0;
+                    for (int k = 0; k < matrix1.length; k++) {
+                        sum += matrix1[x][k] * matrix2[k][y];
+                    }
+                    result[x][y] = sum;
+                }
+            });
+            threads.add(worker);
+        }
+
+        threads.forEach(Thread::start);
+        threads.forEach(thread -> {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         return result;
     }
 

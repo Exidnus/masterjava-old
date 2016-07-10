@@ -26,8 +26,8 @@ public class MainMatrix {
                 "matrixC and matrixD are equals" : "matrixC and matrixD are not equals");
 
         start = System.currentTimeMillis();
-        final int[][] matrixE = new Matrix14JavaMultiplier().multiply(matrixA, matrixB);
-        System.out.println("Multi thread multiplication in Java 1.4 time, sec: " + (System.currentTimeMillis() - start / 1000.));
+        final int[][] matrixE = MatrixUtil.multiplyWithOnlyJava14(matrixA, matrixB);
+        System.out.println("Multi thread multiplication in Java 1.4 time, sec: " + (System.currentTimeMillis() - start) / 1000.);
         System.out.println(MatrixUtil.checkOnEqualsMatrixs(matrixC, matrixE) ?
                 "matrixC and matrixE are equals" : "matrixC and matrixE are not equals");
 
