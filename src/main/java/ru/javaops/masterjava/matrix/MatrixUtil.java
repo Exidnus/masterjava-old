@@ -4,6 +4,7 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -94,6 +95,10 @@ public class MatrixUtil {
     }
 
     public static int[][] multiplyWitnStrassenAlgorithm(int[][] matrix1, int[][] matrix2) {
+
+        final int[][] m1 = getQuadraticMatrixWithSizeDegreeOfTwo(matrix1);
+        final int[][] m2 = getQuadraticMatrixWithSizeDegreeOfTwo(matrix2);
+
         int[][] result = new int[matrix1.length][matrix1.length];
 
         return result;
@@ -114,5 +119,22 @@ public class MatrixUtil {
                 matrix[i][j] = (int) (Math.random() * 200);
             }
         }
+    }
+
+    private static int[][] getQuadraticMatrixWithSizeDegreeOfTwo(int[][] param) {
+        return null;
+    }
+
+    static boolean isDegreeOfTwo(int number) {
+        if (number == 0 || number == 1) {
+            return false;
+        }
+        while (number > 1) {
+            if (number % 2 != 0) {
+                return false;
+            }
+            number = number >> 1;
+        }
+        return true;
     }
 }
