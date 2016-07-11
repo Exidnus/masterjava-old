@@ -93,6 +93,12 @@ public class MatrixUtil {
         return result;
     }
 
+    public static int[][] multiplyWitnForkJoin(int[][] matrix1, int[][] matrix2) {
+        int[][] result = new int[matrix1.length][matrix1.length];
+
+        return result;
+    }
+
     public static boolean checkOnEqualsMatrixs(int[][] matrix1, int[][] matrix2) {
         for (int i = 0; i < matrix1.length; i++) {
             if (!Arrays.equals(matrix1[i], matrix2[i])) {
