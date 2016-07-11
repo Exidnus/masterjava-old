@@ -32,10 +32,10 @@ public class MainMatrix {
                 "Multi thread multiplication with in Java 1.4 executed successfully" : "Multi thread multiplication in Java 1.4 successful!");
 
         start = System.currentTimeMillis();
-        final int[][] resultOfMultiplyingWithForkJoin = MatrixUtil.multiplyWitnForkJoin(matrixA, matrixB);
+        final int[][] resultOfMultiplyingWithStrassenAlgorithm = MatrixUtil.multiplyWitnStrassenAlgorithm(matrixA, matrixB);
         System.out.println("Mult thread multiplication wit Fork/Join time, sec: " + (System.currentTimeMillis() - start) / 1000);
-        System.out.println(MatrixUtil.checkOnEqualsMatrixs(standard, resultOfMultiplyingWithForkJoin) ?
-        "Multi thread multiplication with Fork/Join executed successfully" : "Multi thread multiplication with Fork/Join wasn't successful!");
+        System.out.println(MatrixUtil.checkOnEqualsMatrixs(standard, resultOfMultiplyingWithStrassenAlgorithm) ?
+        "Multi thread multiplication with Strassen algorithm executed successfully" : "Multi thread multiplication with Strassen algorithm wasn't successful!");
         // TODO implement parallel multiplication matrixA*matrixB
         // TODO compare wih standard;
     }

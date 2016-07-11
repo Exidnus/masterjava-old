@@ -93,7 +93,7 @@ public class MatrixUtil {
         return result;
     }
 
-    public static int[][] multiplyWitnForkJoin(int[][] matrix1, int[][] matrix2) {
+    public static int[][] multiplyWitnStrassenAlgorithm(int[][] matrix1, int[][] matrix2) {
         int[][] result = new int[matrix1.length][matrix1.length];
 
         return result;
