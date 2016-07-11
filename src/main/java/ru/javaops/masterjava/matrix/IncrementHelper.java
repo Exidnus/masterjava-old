@@ -9,8 +9,8 @@ import java.util.ConcurrentModificationException;
  */
 public class IncrementHelper {
 
-    private volatile int x = 0;
-    private volatile int y = 0;
+    private int x = 0;
+    private int y = 0;
 
     public synchronized Pair<Integer, Integer> getAndIncrement() {
         Pair<Integer, Integer> result = new Pair<>(x, y);
@@ -22,7 +22,7 @@ public class IncrementHelper {
         return result;
     }
 
-    public synchronized boolean haveMoreWork() {
+    public boolean haveMoreWork() {
         return x < MainMatrix.MATRIX_SIZE;
     }
 }
