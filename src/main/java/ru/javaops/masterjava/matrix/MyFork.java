@@ -19,39 +19,73 @@ public class MyFork extends RecursiveTask<int[][]> {
     @Override
     protected int[][] compute() {
         if (big1.length == 2) {
-            return multiplyWithStrassenAlgorithm(big1, big2);
+            return multiplyInts(big1, big2);
         } else {
-            Four four1 = getFourMatrix(big1);
-            Four four2 = getFourMatrix(big2);
+            Four four1 = getFourFromMatrix(big1);
+            Four four2 = getFourFromMatrix(big2);
 
-            invokeAll(new MyFork(four1.matrix1, four2.matrix1), new MyFork(four1.matrix2, four2.matrix2),
-                    new MyFork(four1.matrix3, four2.matrix3), new MyFork(four1.matrix4, four2.matrix4));
-
-            return null; //TODO
+            return multiplyMatrix(four1, four2);
         }
     }
 
-    private int[][] multiplyWithStrassenAlgorithm(int[][] big1, int[][] big2) {
+    private int[][] multiplyMatrix(Four four1, Four four2) {
+
         return null;
     }
 
-    private Four getFourMatrix(int[][] big) {
-        int newSize = big1.length >> 1;
+    private int[][] multiplyInts(int[][] matrix1, int[][] matrix2) {
+        int[][] result = new int[matrix1.length][matrix1.length];
+
+        for (int i = 0; i < matrix1.length; i++) {
+            for (int j = 0; j < matrix1.length; j++) {
+                int sum = 0;
+                for (int k = 0; k < matrix1.length; k++) {
+                    sum += matrix1[i][k] * matrix2[k][j];
+                }
+                result[i][j] = sum;
+            }
+        }
+
+        return result;
+    }
+
+    private int[][] sumMatrix(int[][] matrix1, int[][] matrix2) {
+        int[][] result = new int[matrix1.length][matrix1.length];
+        for (int i = 0; i < matrix1.length; i++) {
+            for (int j = 0; j < matrix1.length; j++) {
+                result[i][j] = matrix1[i][j] + matrix2[i][j];
+            }
+        }
+        return result;
+    }
+
+    private int[][] subtract(int[][] matrix1, int[][] matrix2) {
+        int[][] result = new int[matrix1.length][matrix1.length];
+        for (int i = 0; i < matrix1.length; i++) {
+            for (int j = 0; j < matrix1.length; j++) {
+                result[i][j] = matrix1[i][j] - matrix2[i][j];
+            }
+        }
+        return result;
+    }
+
+    private Four getFourFromMatrix(int[][] big) {
+        int newSize = big.length >> 1;
         int[][] matrix1 = new int[newSize][newSize];
         int[][] matrix2 = new int[newSize][newSize];
         int[][] matrix3 = new int[newSize][newSize];
         int[][] matrix4 = new int[newSize][newSize];
         for (int i = 0; i < newSize; i++) {
-            System.arraycopy(big1[i], 0, matrix1[i], 0, newSize);
+            System.arraycopy(big[i], 0, matrix1[i], 0, newSize);
         }
-        for (int i = newSize; i < big1.length; i++) {
-            System.arraycopy(big1[i], 0, matrix2[i], 0, newSize);
+        for (int i = newSize; i < big.length; i++) {
+            System.arraycopy(big[i], 0, matrix2[i], 0, newSize);
         }
         for (int i = 0; i < newSize; i++) {
-            System.arraycopy(big1[i], newSize, matrix3[i], newSize, big1.length - newSize);
+            System.arraycopy(big[i], newSize, matrix3[i], newSize, big.length - newSize);
         }
-        for (int i = newSize; i < big1.length; i++) {
-            System.arraycopy(big1[i], newSize, matrix4[i], newSize, big1.length - newSize);
+        for (int i = newSize; i < big.length; i++) {
+            System.arraycopy(big[i], newSize, matrix4[i], newSize, big.length - newSize);
         }
         return new Four(matrix1, matrix2, matrix3, matrix4);
     }
