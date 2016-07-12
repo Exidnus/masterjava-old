@@ -99,11 +99,8 @@ public class MatrixUtil {
         final int[][] m1 = getQuadraticMatrixWithSizeDegreeOfTwo(matrix1);
         final int[][] m2 = getQuadraticMatrixWithSizeDegreeOfTwo(matrix2);
 
-
-
-        int[][] result = new int[matrix1.length][matrix1.length];
-
-        return result;
+        final ForkJoinPool pool = ForkJoinPool.commonPool();
+        return pool.invoke(new MyFork(m1, m2));
     }
 
     public static boolean checkOnEqualsMatrixs(int[][] matrix1, int[][] matrix2) {
