@@ -99,6 +99,8 @@ public class MatrixUtil {
         final int[][] m1 = getQuadraticMatrixWithSizeDegreeOfTwo(matrix1);
         final int[][] m2 = getQuadraticMatrixWithSizeDegreeOfTwo(matrix2);
 
+
+
         int[][] result = new int[matrix1.length][matrix1.length];
 
         return result;
@@ -122,7 +124,38 @@ public class MatrixUtil {
     }
 
     private static int[][] getQuadraticMatrixWithSizeDegreeOfTwo(int[][] param) {
-        return null;
+        if (isDegreeOfTwo(param.length)) {
+            return param;
+        } else {
+            int two = 2;
+            while (two < param.length) {
+                two = two << 1;
+            }
+            int[][] result = new int[two][two];
+            for (int i = 0; i < param.length; i++) {
+                System.arraycopy(param[i], 0, result[i], 0, param.length);
+            }
+            return result;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[][] arr = new int[100][100];
+        fillMatrixWithRandomNumbers(arr);
+        int[][] moreArr = getQuadraticMatrixWithSizeDegreeOfTwo(arr);
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("+++++++++++++++++++");
+        for (int i = 0; i < moreArr.length; i++) {
+            for (int j = 0; j < moreArr.length; j++) {
+                System.out.print(moreArr[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     static boolean isDegreeOfTwo(int number) {
