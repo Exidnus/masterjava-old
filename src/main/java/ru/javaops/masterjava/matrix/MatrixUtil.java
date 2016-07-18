@@ -4,7 +4,6 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -100,7 +99,7 @@ public class MatrixUtil {
         final int[][] m2 = getQuadraticMatrixWithSizeDegreeOfTwo(matrix2);
 
         final ForkJoinPool pool = ForkJoinPool.commonPool();
-        return pool.invoke(new MyFork(m1, m2));
+        return pool.invoke(new Multiply(m1, m2));
     }
 
     public static boolean checkOnEqualsMatrixs(int[][] matrix1, int[][] matrix2) {
@@ -166,5 +165,15 @@ public class MatrixUtil {
             number = number >> 1;
         }
         return true;
+    }
+
+    static void printMatrix(int[][] matrix) {
+        for (int x = 0; x < matrix.length; x++) {
+            for (int y = 0; y < matrix.length; y++) {
+                System.out.print(matrix[x][y] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("++++++++++++++++++++++++++");
     }
 }
