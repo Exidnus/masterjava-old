@@ -40,24 +40,28 @@ public class Multiply extends RecursiveTask<int[][]> {
         int[][] B21 = four2.matrix3;
         int[][] B22 = four2.matrix4;
 
-        Multiply P1 = new Multiply(sum(A11, A22), sum(B11, B22));
-        Multiply P2 = new Multiply(sum(A21, A22), B11);
-        Multiply P3 = new Multiply(A11, subtract(B12, B22));
-        Multiply P4 = new Multiply(A22, subtract(B21, B11));
-        Multiply P5 = new Multiply(sum(A11, A12), B22);
-        Multiply P6 = new Multiply(subtract(A21, A11), sum(B11, B12));
-        Multiply P7 = new Multiply(subtract(A12, A22), sum(B21, B22));
+        Multiply P1Multiply = new Multiply(sum(A11, A22), sum(B11, B22));
+        Multiply P2Multiply = new Multiply(sum(A21, A22), B11);
+        Multiply P3Multiply = new Multiply(A11, subtract(B12, B22));
+        Multiply P4Multiply = new Multiply(A22, subtract(B21, B11));
+        Multiply P5Multiply = new Multiply(sum(A11, A12), B22);
+        Multiply P6Multiply = new Multiply(subtract(A21, A11), sum(B11, B12));
+        Multiply P7Multiply = new Multiply(subtract(A12, A22), sum(B21, B22));
 
-        return null;
-    }
+        int[][] P1 = P1Multiply.join();
+        int[][] P2 = P2Multiply.join();
+        int[][] P3 = P3Multiply.join();
+        int[][] P4 = P4Multiply.join();
+        int[][] P5 = P5Multiply.join();
+        int[][] P6 = P6Multiply.join();
+        int[][] P7 = P7Multiply.join();
 
-    private int[][] multiplyMatrix(Four four1, Four four2) {
-        int newSize = four1.matrix1.length << 1;
-        int[][] result = new int[newSize][newSize];
+        int[][] C11 = null;
+        int[][] C12 = null;
+        int[][] C21 = null;
+        int[][] C22 = null;
 
-
-
-        return result;
+        return getMatrixFromFourMatrix(C11, C12, C21, C22);
     }
 
     private int[][] multiplyMatrixesStandard(int[][] matrix1, int[][] matrix2) {
@@ -126,7 +130,7 @@ public class Multiply extends RecursiveTask<int[][]> {
         return new Four(matrix1, matrix2, matrix3, matrix4);
     }
 
-    private int[][] getMatrixFromFour(int[][] m1, int[][] m2, int[][] m3, int[][] m4) {
+    private int[][] getMatrixFromFourMatrix(int[][] m1, int[][] m2, int[][] m3, int[][] m4) {
         int newSize = m1.length << 1;
         int oldSize = m1.length;
         int[][] result = new int[newSize][newSize];
