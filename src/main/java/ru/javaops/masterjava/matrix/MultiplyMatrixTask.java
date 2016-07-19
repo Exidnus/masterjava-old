@@ -5,14 +5,14 @@ import java.util.concurrent.RecursiveTask;
 /**
  * Created by DVarygin on 12.07.2016.
  */
-public class Multiply extends RecursiveTask<int[][]> {
+public class MultiplyMatrixTask extends RecursiveTask<int[][]> {
 
     private static final int BORDER = 2;
 
     private final int[][] source1;
     private final int[][] source2;
 
-    public Multiply(int[][] source1, int[][] source2) {
+    public MultiplyMatrixTask(int[][] source1, int[][] source2) {
         this.source1 = source1;
         this.source2 = source2;
     }
@@ -40,13 +40,21 @@ public class Multiply extends RecursiveTask<int[][]> {
         int[][] B21 = four2.matrix3;
         int[][] B22 = four2.matrix4;
 
-        Multiply P1Multiply = new Multiply(sum(A11, A22), sum(B11, B22));
-        Multiply P2Multiply = new Multiply(sum(A21, A22), B11);
-        Multiply P3Multiply = new Multiply(A11, subtract(B12, B22));
-        Multiply P4Multiply = new Multiply(A22, subtract(B21, B11));
-        Multiply P5Multiply = new Multiply(sum(A11, A12), B22);
-        Multiply P6Multiply = new Multiply(subtract(A21, A11), sum(B11, B12));
-        Multiply P7Multiply = new Multiply(subtract(A12, A22), sum(B21, B22));
+        MultiplyMatrixTask P1Multiply = new MultiplyMatrixTask(sum(A11, A22), sum(B11, B22));
+        MultiplyMatrixTask P2Multiply = new MultiplyMatrixTask(sum(A21, A22), B11);
+        MultiplyMatrixTask P3Multiply = new MultiplyMatrixTask(A11, subtract(B12, B22));
+        MultiplyMatrixTask P4Multiply = new MultiplyMatrixTask(A22, subtract(B21, B11));
+        MultiplyMatrixTask P5Multiply = new MultiplyMatrixTask(sum(A11, A12), B22);
+        MultiplyMatrixTask P6Multiply = new MultiplyMatrixTask(subtract(A21, A11), sum(B11, B12));
+        MultiplyMatrixTask P7Multiply = new MultiplyMatrixTask(subtract(A12, A22), sum(B21, B22));
+
+        P7Multiply.fork();
+        P6Multiply.fork();
+        P5Multiply.fork();
+        P4Multiply.fork();
+        P3Multiply.fork();
+        P2Multiply.fork();
+        P1Multiply.fork();
 
         int[][] P1 = P1Multiply.join();
         int[][] P2 = P2Multiply.join();
@@ -56,10 +64,10 @@ public class Multiply extends RecursiveTask<int[][]> {
         int[][] P6 = P6Multiply.join();
         int[][] P7 = P7Multiply.join();
 
-        int[][] C11 = null;
-        int[][] C12 = null;
-        int[][] C21 = null;
-        int[][] C22 = null;
+        int[][] C11 = subtract(sum(P1, P4), sum(P5, P7));
+        int[][] C12 = sum(P3, P5);
+        int[][] C21 = sum(P2, P4);
+        int[][] C22 = sum(subtract(P1, P2), sum(P3, P6));
 
         return getMatrixFromFourMatrix(C11, C12, C21, C22);
     }

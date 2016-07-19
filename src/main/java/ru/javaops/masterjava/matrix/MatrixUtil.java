@@ -99,7 +99,7 @@ public class MatrixUtil {
         final int[][] m2 = getQuadraticMatrixWithSizeDegreeOfTwo(matrix2);
 
         final ForkJoinPool pool = ForkJoinPool.commonPool();
-        return pool.invoke(new Multiply(m1, m2));
+        return pool.invoke(new MultiplyMatrixTask(m1, m2));
     }
 
     public static boolean checkOnEqualsMatrixs(int[][] matrix1, int[][] matrix2) {
@@ -114,7 +114,7 @@ public class MatrixUtil {
     public static void fillMatrixWithRandomNumbers(int[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length; j++) {
-                matrix[i][j] = (int) (Math.random() * 200);
+                matrix[i][j] = (int) (Math.random() * 5);
             }
         }
     }
