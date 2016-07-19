@@ -20,7 +20,7 @@ public class MultiplyMatrixTask extends RecursiveTask<int[][]> {
     @Override
     protected int[][] compute() {
         if (source1.length <= BORDER) {
-            return multiplyMatrixesStandard(source1, source2);
+            return multiplyMatrixsStandard(source1, source2);
         } else {
             Four four1 = getFourFromMatrix(source1);
             Four four2 = getFourFromMatrix(source2);
@@ -72,7 +72,7 @@ public class MultiplyMatrixTask extends RecursiveTask<int[][]> {
         return getMatrixFromFourMatrix(C11, C12, C21, C22);
     }
 
-    private int[][] multiplyMatrixesStandard(int[][] matrix1, int[][] matrix2) {
+    private int[][] multiplyMatrixsStandard(int[][] matrix1, int[][] matrix2) {
         int[][] result = new int[matrix1.length][matrix1.length];
 
         for (int i = 0; i < matrix1.length; i++) {

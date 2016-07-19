@@ -19,7 +19,7 @@ public class MainMatrix {
         final int[][] standard = MatrixUtil.singleThreadMultiply(matrixA, matrixB);
         System.out.println("Single thread multiplication time, sec: " + (System.currentTimeMillis() - start) / 1000.);
 
-        /*start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         final int[][] resultOfMultiplyingWithExecutorService = MatrixUtil.multiplyWithExecutorService(matrixA, matrixB);
         System.out.println("Multi thread multiplication time, sec: " + (System.currentTimeMillis() - start) / 1000.);
         System.out.println(MatrixUtil.checkOnEqualsMatrixs(standard, resultOfMultiplyingWithExecutorService) ?
@@ -29,7 +29,7 @@ public class MainMatrix {
         final int[][] resultOfMultiplyingWithOnlyJava14 = MatrixUtil.multiplyWithOnlyJava14(matrixA, matrixB);
         System.out.println("Multi thread multiplication in Java 1.4 time, sec: " + (System.currentTimeMillis() - start) / 1000.);
         System.out.println(MatrixUtil.checkOnEqualsMatrixs(standard, resultOfMultiplyingWithOnlyJava14) ?
-                "Multi thread multiplication with in Java 1.4 executed successfully" : "Multi thread multiplication in Java 1.4 successful!");*/
+                "Multi thread multiplication with in Java 1.4 executed successfully" : "Multi thread multiplication in Java 1.4 successful!");
 
         start = System.currentTimeMillis();
         final int[][] resultOfMultiplyingWithStrassenAlgorithm = MatrixUtil.multiplyWitnStrassenAlgorithm(matrixA, matrixB);
@@ -41,5 +41,19 @@ public class MainMatrix {
         MatrixUtil.printMatrix(resultOfMultiplyingWithStrassenAlgorithm);
         // TODO implement parallel multiplication matrixA*matrixB
         // TODO compare wih standard;
+        /*int[][] a = new int[][]{
+                {1, 2, 1, 3},
+                {2, 1, 1, 2},
+                {1, 3, 1, 2},
+                {2, 2, 2, 2,}
+        };
+        int[][] b = new int[][]{
+                {2, 2, 2, 2},
+                {1, 2, 3, 1},
+                {1, 1, 2, 1},
+                {3, 3, 1, 1}
+        };
+        int[][] c = MatrixUtil.singleThreadMultiply(a, b);
+        MatrixUtil.printMatrix(c);*/
     }
 }
